@@ -7,7 +7,6 @@ type Cache struct {
 	nbytes   int64
 	ll       *list.List
 	cache    map[string]*list.Element
-
 	OnEvicted func(key string, value Value)
 }
 
@@ -20,6 +19,7 @@ type Value interface {
 	Len() int
 }
 
+// init cache
 func New(maxBytes int64, onEvicted func(string, Value)) *Cache{
 	return &Cache{
 		maxBytes: maxBytes,
@@ -29,6 +29,7 @@ func New(maxBytes int64, onEvicted func(string, Value)) *Cache{
 	}
 }
 
+// get a key's value
 func (c *Cache) Get(key string) (value Value, ok bool){
 	if ele, ok := c.cache[key]; ok{
 		c.ll.MoveToFront(ele)
@@ -38,6 +39,7 @@ func (c *Cache) Get(key string) (value Value, ok bool){
 	return 
 }
 
+// remove oldest item
 func (c *Cache) RemoveOldest() {
 	ele := c.ll.Back()
 	if ele != nil{
@@ -51,6 +53,7 @@ func (c *Cache) RemoveOldest() {
 	}
 }
 
+// add a value to the cache
 func (c *Cache) Add(key string, value Value) {
 	if ele, ok := c.cache[key]; ok{
 		c.ll.MoveToFront(ele)
@@ -68,6 +71,7 @@ func (c *Cache) Add(key string, value Value) {
 	}
 }
 
+// return the number of cache entries
 func (c *Cache) Len() int {
 	return c.ll.Len()
 }
