@@ -84,11 +84,8 @@ func (g *Group) getLocally(key string) (ByteView, error) {
 	return value, nil
 }
 
-<<<<<<< HEAD
-// add data to main
-=======
+
 // add data to mainCache
->>>>>>> 53bcb0b4e7a9f6c19fc1f043b7598437f2b1c046
 func (g *Group) populateCache(key string, value ByteView) {
 	g.mainCache.add(key, value)
 }
